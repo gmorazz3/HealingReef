@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class Sharkyscript : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D))]
+public class SharkyController : MonoBehaviour
 {
     Rigidbody2D shark;
 
@@ -12,14 +13,8 @@ public class Sharkyscript : MonoBehaviour
     public float wiggleSpeed = 6f;
     public float wiggleAmount = 0.03f;
 
-    [Header("Click Movement")]
-    public float clickDeadzone = 0.2f;
-
     Vector3 baseScale;
     float wiggleTimer;
-
-    Vector2 targetPosition;
-    bool hasTarget = false;
 
     void Start()
     {
@@ -29,77 +24,35 @@ public class Sharkyscript : MonoBehaviour
 
     void Update()
     {
-        Vector2 force = Vector2.zero;
-
-        // Keyboard movement
-        bool keyboardInput = false;
-
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        {
-            force += Vector2.left;
-            Flip(false);
-            keyboardInput = true;
-        }
-        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        {
-            force += Vector2.right;
-            Flip(true);
-            keyboardInput = true;
-        }
-
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
-        {
-            force += Vector2.up;
-            keyboardInput = true;
-        }
-
-        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-        {
-            force += Vector2.down;
-            keyboardInput = true;
-        }
-
-        // If the player used keyboard, cancel click movement
-        if (keyboardInput) hasTarget = false;
-
-        // Apply keyboard force
-        if (force != Vector2.zero)
-        {
-            force.Normalize(); // optional, keeps diagonal movement consistent
-            shark.AddForce(force * baseSpeed * speedMultiplier * Time.deltaTime);
-        }
-
-        HandleClickMovement();
+        HandleKeyboardMovement();
         TailWiggle();
     }
 
-    void HandleClickMovement()
+    private void HandleKeyboardMovement()
     {
-        if (Input.GetMouseButton(0))
+        Vector2 input = Vector2.zero;
+
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) input.x = -1;
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) input.x = 1;
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) input.y = 1;
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) input.y = -1;
+
+        if (input != Vector2.zero)
         {
-            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            targetPosition = mouseWorld;
-            hasTarget = true;
+            input.Normalize();
+            shark.linearVelocity = input * baseSpeed * speedMultiplier * Time.deltaTime;
+
+            // Flip sprite
+            if (input.x < -0.1f) Flip(false);
+            else if (input.x > 0.1f) Flip(true);
         }
-
-        if (!hasTarget) return;
-
-        Vector2 direction = targetPosition - shark.position;
-
-        if (direction.magnitude < clickDeadzone)
+        else
         {
-            hasTarget = false;
-            return;
+            shark.linearVelocity = Vector2.zero;
         }
-
-        direction.Normalize();
-        shark.AddForce(direction * baseSpeed * speedMultiplier * Time.deltaTime);
-
-        if (direction.x < -0.1f) Flip(false);
-        else if (direction.x > 0.1f) Flip(true);
     }
 
-    void TailWiggle()
+    private void TailWiggle()
     {
         wiggleTimer += Time.deltaTime * wiggleSpeed;
         float wiggle = Mathf.Sin(wiggleTimer) * wiggleAmount;
@@ -109,7 +62,7 @@ public class Sharkyscript : MonoBehaviour
         transform.localScale = scale;
     }
 
-    void Flip(bool faceRight)
+    private void Flip(bool faceRight)
     {
         Vector3 scale = baseScale;
         scale.x = Mathf.Abs(scale.x) * (faceRight ? 1 : -1);

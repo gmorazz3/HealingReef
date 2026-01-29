@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      underwater-coral_0: 505297744086744194
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      underwater-rock_0: -7004546983997624896
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

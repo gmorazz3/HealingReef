@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      SeaAngler - EM_0: 6445257582977129374
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
