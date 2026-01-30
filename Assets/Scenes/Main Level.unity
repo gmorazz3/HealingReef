@@ -1459,6 +1459,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7333115409762941259, guid: 05327f60f13faaa47a2cbd7dcff09a23, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7333115409762941259, guid: 05327f60f13faaa47a2cbd7dcff09a23, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1775968073
+      objectReference: {fileID: 0}
     - target: {fileID: 7631273323540071893, guid: 05327f60f13faaa47a2cbd7dcff09a23, type: 3}
       propertyPath: m_Name
       value: Patient
@@ -1936,6 +1944,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7333115409762941259, guid: 05327f60f13faaa47a2cbd7dcff09a23, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7333115409762941259, guid: 05327f60f13faaa47a2cbd7dcff09a23, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1775968073
+      objectReference: {fileID: 0}
     - target: {fileID: 7631273323540071893, guid: 05327f60f13faaa47a2cbd7dcff09a23, type: 3}
       propertyPath: m_Name
       value: Patient (1)
@@ -1996,6 +2012,14 @@ PrefabInstance:
     - target: {fileID: 5962339633814103983, guid: 49310eaa25076b1449df25b737459210, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8311351179307480566, guid: 49310eaa25076b1449df25b737459210, type: 3}
+      propertyPath: baseSpeed
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8311351179307480566, guid: 49310eaa25076b1449df25b737459210, type: 3}
+      propertyPath: speedMultiplier
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
