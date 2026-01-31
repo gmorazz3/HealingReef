@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      whale doofus_0: 5433803967436558394
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
