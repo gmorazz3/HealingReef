@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f96e3aad8f1179b43a4e3452ac60f9d5
+guid: 769ebfe5e7582014f97777bf565947aa
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2955785835974710366
-    second: BShark 1_0
+      213: 5471808422794115215
+    second: NewShell_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BShark 1_0
+      name: NewShell_0
       rect:
         serializedVersion: 2
-        x: 70
-        y: 131
-        width: 445
-        height: 246
+        x: 143
+        y: 93
+        width: 343
+        height: 213
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e545761be8f050920800000000000000
-      internalID: 2955785835974710366
+      spriteID: f8832a705c4cfeb40800000000000000
+      internalID: 5471808422794115215
       vertices: []
       indices: 
       edges: []
@@ -173,8 +173,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      BShark 1_0: 2955785835974710366
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

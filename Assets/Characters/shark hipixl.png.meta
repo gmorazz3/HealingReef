@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      shark hipixl_0: 5857256611851573843
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
