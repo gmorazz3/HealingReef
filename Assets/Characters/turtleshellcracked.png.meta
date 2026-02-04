@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      turtleshellcracked_0: 1463364260593563789
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
