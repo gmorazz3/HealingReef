@@ -44,8 +44,18 @@ public class WindHallway : MonoBehaviour
         else
         {
             // Player boosted → normal movement
-            player.speedMultiplier = tempSpeed;
-            windTimer = 0f; // reset
+            if (tempSpeed < 1.0f)
+            {
+                player.speedMultiplier = 1.0f;
+            }
+            else
+            {
+                player.speedMultiplier = tempSpeed;
+            }
+
+            // reset
+            windTimer = 0f; 
+
         }
     }
 
@@ -55,7 +65,17 @@ public class WindHallway : MonoBehaviour
 
         SharkyController player = other.GetComponent<SharkyController>();
         if (player != null)
-            player.speedMultiplier = tempSpeed;
+        {
+            if (tempSpeed < 1.0f)
+            {
+                player.speedMultiplier = 1.0f;
+            }
+            else
+            {
+                player.speedMultiplier = tempSpeed;
+            }
+        }
+           
 
         // Reset timer so wind ramps from zero next time
         windTimer = 0f;
