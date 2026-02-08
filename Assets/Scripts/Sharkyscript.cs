@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class SharkyController : MonoBehaviour
@@ -31,7 +31,7 @@ public class SharkyController : MonoBehaviour
     public Color matchaColor = new Color(0.6f, 1f, 0.6f); // Green tint for boost
 
     // Track if matcha boost is active
-    private bool isMatchaActive = false;
+    public bool isMatchaActive = false;
 
     void Awake()
     {
