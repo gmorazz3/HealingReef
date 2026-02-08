@@ -2,17 +2,21 @@ using UnityEngine;
 
 public class DarknessZone : MonoBehaviour
 {
-    public GameObject darknessGroup;
+    public GameObject darknessOverlay;
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
-            darknessGroup.SetActive(true);
+        {
+            darknessOverlay.SetActive(true);
+        }
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
-            darknessGroup.SetActive(false);
+        {
+            darknessOverlay.SetActive(false);
+        }
     }
 }
