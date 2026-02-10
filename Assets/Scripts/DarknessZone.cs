@@ -1,14 +1,18 @@
+using System.Collections;
 using UnityEngine;
 
 public class DarknessZone : MonoBehaviour
 {
-    public GameObject darknessOverlay;
+    public CanvasGroup darknessOverlay;
+    public float fadeDuration = 0.5f;
+
+    private Coroutine fadeCoroutine;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            darknessOverlay.SetActive(true);
+            FadeTo(1f);
         }
     }
 
@@ -16,7 +20,32 @@ public class DarknessZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            darknessOverlay.SetActive(false);
+            FadeTo(0f);
         }
+    }
+
+    void FadeTo(float targetAlpha)
+    {
+        if (fadeCoroutine != null)
+            StopCoroutine(fadeCoroutine);
+
+        fadeCoroutine = StartCoroutine(FadeRoutine(targetAlpha));
+    }
+
+    IEnumerator FadeRoutine(float targetAlpha)
+    {
+        float startAlpha = darknessOverlay.alpha;
+        float time = 0f;
+
+        while (time < fadeDuration)
+        {
+            darknessOverlay.alpha = Mathf.Lerp(startAlpha, targetAlpha, time / fadeDuration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        darknessOverlay.alpha = targetAlpha;
+        darknessOverlay.blocksRaycasts = targetAlpha > 0;
+        darknessOverlay.interactable = targetAlpha > 0;
     }
 }
