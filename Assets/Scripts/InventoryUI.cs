@@ -4,13 +4,13 @@ using UnityEngine.UI;
 public class InventoryUI : MonoBehaviour
 {
     public Image AloeIcon;
-    public Image ItemTrail2Icon;
+    public Image ShellIcon;
 
     void Start()
     {
         // Fully hidden at start
         AloeIcon.enabled = false;
-        ItemTrail2Icon.enabled = false; // <-- FIXED
+        ShellIcon.enabled = false; // <-- FIXED
     }
 
     public void SetAloe(bool hasAloe)
@@ -18,8 +18,8 @@ public class InventoryUI : MonoBehaviour
         AloeIcon.enabled = hasAloe; // <-- also fixed
     }
 
-    public void SetItemTrail2(bool hasItemTrail2)
+    public void SetShell(bool hasItemTrail2)
     {
-        ItemTrail2Icon.enabled = hasItemTrail2;
+        ShellIcon.enabled = hasItemTrail2;
     }
 }

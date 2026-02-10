@@ -22,7 +22,7 @@ public class SharkyController : MonoBehaviour
     [Header("Inventory")]
     public InventoryUI inventoryUI;       // Reference to UI controller
     public bool HasAloeVera = false;     // Track if shark has picked up Aloe Vera
-    public bool HasShell = false;     // Track if shark has picked up ItemTrail2
+    public bool HasShell = false;     // Track if shark has picked up Shell
 
 
     [Header("Powerups")]
@@ -105,12 +105,12 @@ public class SharkyController : MonoBehaviour
             inventoryUI.SetAloe(true);
         }
 
-        // Pickup ItemTrail2
+        // Pickup Shell
         if (collision.CompareTag("Shell") && !HasShell)
         {
             collision.gameObject.SetActive(false);
             HasShell = true;
-            inventoryUI.SetItemTrail2(true);
+            inventoryUI.SetShell(true);
         }
 
 
