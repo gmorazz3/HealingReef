@@ -4,9 +4,7 @@ using UnityEngine;
 
 public enum IllnessType
 {
-    BubbleHiccups,
-    TangledInVines,
-    FoodPoisoning,
+    CrackedShell,
     Sunburn
 }
 
@@ -16,53 +14,54 @@ public class PatientDialogue : MonoBehaviour
     public IllnessType illness;
 
     [Header("Dialogue Text")]
-    [TextArea] public string bubbleBefore;
-    [TextArea] public string bubbleAfter;
-    [TextArea] public string vineBefore;
-    [TextArea] public string vineAfter;
-    [TextArea] public string foodBefore;
-    [TextArea] public string foodAfter;
+    [TextArea] public string crackedBefore;
+    [TextArea] public string crackedAfter;
     [TextArea] public string sunBefore;
     [TextArea] public string sunAfter;
-
-    [Header("Particles")]
-    public ParticleSystem bubbleParticles;
-    public ParticleSystem vineParticles;
-    public ParticleSystem foodParticles;
-    public ParticleSystem sunParticles;
-    public ParticleSystem healParticles;
 
     [Header("Bubble UI")]
     public GameObject dialogueBubble;
     public TextMeshProUGUI bubbleText;
     public float typingSpeed = 0.03f;
 
-    private ParticleSystem activeIllnessParticles;
+    [Header("Visuals")]
+    public SpriteRenderer patientSprite;
+
+    [Header("Cracked Shell Sprites")]
+    public Sprite crackedBeforeSprite;
+    public Sprite crackedAfterSprite;
+
+    [Header("Sunburn Visuals")]
+    public Color sunburnColor = Color.red;
+    private Color originalColor;
+
+    [Header("Heal Effect")]
+    public ParticleSystem healParticles;
+
     private bool isHealed = false;
-    private bool playerInRange = false;
+    private SharkyController playerController;
     private Coroutine typingCoroutine;
 
     private void Start()
     {
-        SpawnIllnessParticles();
-        if (dialogueBubble != null)
-            dialogueBubble.SetActive(false);
-    }
+        if (patientSprite != null)
+            originalColor = patientSprite.color;
 
-    private void Update()
-    {
-        if (playerInRange && !isHealed && Input.GetKeyDown(KeyCode.E))
-        {
-            HealPatient();
-        }
+        ApplyInitialVisuals();
+        HideBubble();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            playerInRange = true;
+            playerController = other.GetComponent<SharkyController>();
+
+            // Show BEFORE text if not healed yet
             ShowCorrectDialogue();
+
+            // Attempt automatic heal
+            TryAutoHeal();
         }
     }
 
@@ -70,24 +69,95 @@ public class PatientDialogue : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerInRange = false;
+            playerController = null;
             HideBubble();
         }
     }
 
+    private void TryAutoHeal()
+    {
+        if (isHealed || playerController == null)
+            return;
+
+        bool hasCure = false;
+
+        switch (illness)
+        {
+            case IllnessType.CrackedShell:
+                hasCure = playerController.HasShell;
+                break;
+            case IllnessType.Sunburn:
+                hasCure = playerController.HasAloeVera;
+                break;
+        }
+
+        if (hasCure)
+        {
+            HealPatient();
+        }
+    }
 
     private void HealPatient()
     {
         if (isHealed) return;
 
         isHealed = true;
-        ShowCorrectDialogue();
-        RemoveIllnessParticles();
-        SpawnHealParticles();
+        ApplyHealedVisuals();
+        ConsumeCure();
+        PlayHealEffect();
+        ShowCorrectDialogue(); // Show AFTER text
+    }
+
+    private void ConsumeCure()
+    {
+        if (playerController == null) return;
+
+        switch (illness)
+        {
+            case IllnessType.CrackedShell:
+                playerController.HasShell = false;
+                break;
+            case IllnessType.Sunburn:
+                playerController.HasAloeVera = false;
+                break;
+        }
+    }
+
+    private void ApplyInitialVisuals()
+    {
+        if (illness == IllnessType.CrackedShell)
+            patientSprite.sprite = crackedBeforeSprite;
+        else if (illness == IllnessType.Sunburn)
+            patientSprite.color = sunburnColor;
+    }
+
+    private void ApplyHealedVisuals()
+    {
+        if (illness == IllnessType.CrackedShell)
+            patientSprite.sprite = crackedAfterSprite;
+        else if (illness == IllnessType.Sunburn)
+            patientSprite.color = originalColor;
+    }
+
+    private void PlayHealEffect()
+    {
+        if (healParticles != null)
+        {
+            ParticleSystem ps = Instantiate(
+                healParticles,
+                transform.position + Vector3.up,
+                Quaternion.identity
+            );
+            ps.Play();
+            //Destroy(ps.gameObject, ps.main.duration + ps.main.startLifetime.constantMax);
+        }
     }
 
     private void ShowCorrectDialogue()
     {
+        if (dialogueBubble == null || bubbleText == null)
+            return;
+
         string text = isHealed ? GetAfterText() : GetBeforeText();
         ShowBubble(text);
     }
@@ -126,54 +196,11 @@ public class PatientDialogue : MonoBehaviour
         }
     }
 
-    private void SpawnIllnessParticles()
-    {
-        switch (illness)
-        {
-            case IllnessType.BubbleHiccups:
-                activeIllnessParticles = Instantiate(bubbleParticles, transform.position + Vector3.up, Quaternion.identity, transform);
-                break;
-            case IllnessType.TangledInVines:
-                activeIllnessParticles = Instantiate(vineParticles, transform.position + Vector3.up, Quaternion.identity, transform);
-                break;
-            case IllnessType.FoodPoisoning:
-                activeIllnessParticles = Instantiate(foodParticles, transform.position + Vector3.up, Quaternion.identity, transform);
-                break;
-            case IllnessType.Sunburn:
-                activeIllnessParticles = Instantiate(sunParticles, transform.position + Vector3.up, Quaternion.identity, transform);
-                break;
-        }
-
-        if (activeIllnessParticles != null)
-            activeIllnessParticles.Play();
-    }
-
-    private void RemoveIllnessParticles()
-    {
-        if (activeIllnessParticles != null)
-        {
-            activeIllnessParticles.Stop();
-            Destroy(activeIllnessParticles.gameObject, 0.5f);
-        }
-    }
-
-    private void SpawnHealParticles()
-    {
-        if (healParticles != null)
-        {
-            ParticleSystem ps = Instantiate(healParticles, transform.position + Vector3.up, Quaternion.identity);
-            ps.Play();
-            Destroy(ps.gameObject, ps.main.duration + ps.main.startLifetime.constantMax);
-        }
-    }
-
     private string GetBeforeText()
     {
         switch (illness)
         {
-            case IllnessType.BubbleHiccups: return bubbleBefore;
-            case IllnessType.TangledInVines: return vineBefore;
-            case IllnessType.FoodPoisoning: return foodBefore;
+            case IllnessType.CrackedShell: return crackedBefore;
             case IllnessType.Sunburn: return sunBefore;
             default: return "";
         }
@@ -183,9 +210,7 @@ public class PatientDialogue : MonoBehaviour
     {
         switch (illness)
         {
-            case IllnessType.BubbleHiccups: return bubbleAfter;
-            case IllnessType.TangledInVines: return vineAfter;
-            case IllnessType.FoodPoisoning: return foodAfter;
+            case IllnessType.CrackedShell: return crackedAfter;
             case IllnessType.Sunburn: return sunAfter;
             default: return "";
         }
