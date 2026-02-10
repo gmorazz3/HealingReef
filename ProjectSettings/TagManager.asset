@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Cure
+  - matcha
+  - AloeVera
   layers:
   - Default
   - TransparentFX
@@ -41,6 +44,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BehindTiles
+    uniqueID: 2820051757
+    locked: 0
   - name: Background
     uniqueID: 1157035237
     locked: 0
@@ -49,6 +55,12 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 1775968073
+    locked: 0
+  - name: effects
+    uniqueID: 2092751243
+    locked: 0
+  - name: UI
+    uniqueID: 2734356311
     locked: 0
   m_RenderingLayers:
   - Default
