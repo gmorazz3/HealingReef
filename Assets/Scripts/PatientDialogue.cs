@@ -24,6 +24,9 @@ public class PatientDialogue : MonoBehaviour
     public TextMeshProUGUI bubbleText;
     public float typingSpeed = 0.03f;
 
+    [Header("Bubble Animation")]
+    public float bubblePopDuration = 0.15f;
+
     [Header("Visuals")]
     public SpriteRenderer patientSprite;
 
@@ -41,6 +44,7 @@ public class PatientDialogue : MonoBehaviour
     private bool isHealed = false;
     private SharkyController playerController;
     private Coroutine typingCoroutine;
+    private Coroutine bubbleScaleCoroutine;
 
     private void Start()
     {
@@ -48,7 +52,12 @@ public class PatientDialogue : MonoBehaviour
             originalColor = patientSprite.color;
 
         ApplyInitialVisuals();
-        HideBubble();
+
+        if (dialogueBubble != null)
+        {
+            dialogueBubble.SetActive(true);
+            dialogueBubble.transform.localScale = Vector3.zero;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -56,11 +65,7 @@ public class PatientDialogue : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerController = other.GetComponent<SharkyController>();
-
-            // Show BEFORE text if not healed yet
             ShowCorrectDialogue();
-
-            // Attempt automatic heal
             TryAutoHeal();
         }
     }
@@ -105,7 +110,7 @@ public class PatientDialogue : MonoBehaviour
         ApplyHealedVisuals();
         ConsumeCure();
         PlayHealEffect();
-        ShowCorrectDialogue(); // Show AFTER text
+        ShowCorrectDialogue();
     }
 
     private void ConsumeCure()
@@ -149,7 +154,6 @@ public class PatientDialogue : MonoBehaviour
                 Quaternion.identity
             );
             ps.Play();
-            //Destroy(ps.gameObject, ps.main.duration + ps.main.startLifetime.constantMax);
         }
     }
 
@@ -166,12 +170,45 @@ public class PatientDialogue : MonoBehaviour
     {
         if (dialogueBubble == null || bubbleText == null) return;
 
+        if (bubbleScaleCoroutine != null)
+            StopCoroutine(bubbleScaleCoroutine);
+
         dialogueBubble.SetActive(true);
+        bubbleScaleCoroutine = StartCoroutine(ScaleBubble(Vector3.one));
 
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
 
         typingCoroutine = StartCoroutine(TypeText(text));
+    }
+
+    private void HideBubble()
+    {
+        if (dialogueBubble == null) return;
+
+        if (bubbleScaleCoroutine != null)
+            StopCoroutine(bubbleScaleCoroutine);
+
+        bubbleScaleCoroutine = StartCoroutine(ScaleBubble(Vector3.zero));
+    }
+
+    private IEnumerator ScaleBubble(Vector3 targetScale)
+    {
+        Vector3 startScale = dialogueBubble.transform.localScale;
+        float elapsed = 0f;
+
+        while (elapsed < bubblePopDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / bubblePopDuration;
+            dialogueBubble.transform.localScale = Vector3.Lerp(startScale, targetScale, t);
+            yield return null;
+        }
+
+        dialogueBubble.transform.localScale = targetScale;
+
+        if (targetScale == Vector3.zero)
+            dialogueBubble.SetActive(false);
     }
 
     private IEnumerator TypeText(string text)
@@ -181,18 +218,6 @@ public class PatientDialogue : MonoBehaviour
         {
             bubbleText.text += c;
             yield return new WaitForSeconds(typingSpeed);
-        }
-    }
-
-    private void HideBubble()
-    {
-        if (dialogueBubble != null)
-            dialogueBubble.SetActive(false);
-
-        if (typingCoroutine != null)
-        {
-            StopCoroutine(typingCoroutine);
-            typingCoroutine = null;
         }
     }
 
