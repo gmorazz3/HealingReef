@@ -38805,7 +38805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7631273323540071893, guid: 05327f60f13faaa47a2cbd7dcff09a23, type: 3}
       propertyPath: m_Name
-      value: Patient
+      value: Turtle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -49544,7 +49544,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7018562758235999925, guid: 10b4503868a0e6f4191ec89d1e842a91, type: 3}
       propertyPath: moveDistance
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7018562758235999925, guid: 10b4503868a0e6f4191ec89d1e842a91, type: 3}
       propertyPath: startRightOrUp
@@ -49552,11 +49552,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8682293208399455214, guid: 10b4503868a0e6f4191ec89d1e842a91, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 45.05
+      value: 44.73
       objectReference: {fileID: 0}
     - target: {fileID: 8682293208399455214, guid: 10b4503868a0e6f4191ec89d1e842a91, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.18
+      value: 9.63
       objectReference: {fileID: 0}
     - target: {fileID: 8682293208399455214, guid: 10b4503868a0e6f4191ec89d1e842a91, type: 3}
       propertyPath: m_LocalPosition.z
@@ -53441,7 +53441,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7631273323540071893, guid: 05327f60f13faaa47a2cbd7dcff09a23, type: 3}
       propertyPath: m_Name
-      value: Patient (1)
+      value: Mantaray
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -59632,6 +59632,10 @@ PrefabInstance:
     - target: {fileID: 5034676836735257227, guid: cca5f934a2004ac489d68e8818147db8, type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5034676836735257227, guid: cca5f934a2004ac489d68e8818147db8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 3.8
       objectReference: {fileID: 0}
     - target: {fileID: 5335056334218569333, guid: cca5f934a2004ac489d68e8818147db8, type: 3}
       propertyPath: m_Radius

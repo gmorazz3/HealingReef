@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      HealingReefMainBack_0: 4965759423880036038
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

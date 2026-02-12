@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      StockCake-Pixelated_Coral_Depths-3035031-standard_0: -7971144996430232449
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
