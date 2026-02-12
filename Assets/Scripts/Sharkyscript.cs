@@ -106,28 +106,29 @@ public class SharkyController : MonoBehaviour
         // Pickup Aloe Vera
         if (collision.CompareTag("AloeVera") && !HasAloeVera)
         {
+            audioSource.PlayOneShot(ItemCollectSound);
             collision.gameObject.SetActive(false);
             HasAloeVera = true;
             inventoryUI.SetAloe(true);
-            audioSource.PlayOneShot(ItemCollectSound);
+            
         }
 
         // Pickup Shell
         if (collision.CompareTag("Shell") && !HasShell)
         {
+            audioSource.PlayOneShot(ItemCollectSound);
             collision.gameObject.SetActive(false);
             HasShell = true;
             inventoryUI.SetShell(true);
-            audioSource.PlayOneShot(ItemCollectSound);
         }
 
 
         // Pickup Matcha for temporary speed boost
         if (collision.CompareTag("matcha") && !isMatchaActive)
         {
+            audioSource.PlayOneShot(MatchaPickupSound);
             collision.gameObject.SetActive(false); // Hide item immediately
             StartCoroutine(MatchaBoost(collision.gameObject));
-            audioSource.PlayOneShot(MatchaPickupSound);
         }
     }
 
