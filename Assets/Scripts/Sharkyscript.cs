@@ -33,6 +33,10 @@ public class SharkyController : MonoBehaviour
     // Track if matcha boost is active
     public bool isMatchaActive = false;
 
+    public AudioClip ItemCollectSound;   // sound file
+    public AudioClip MatchaPickupSound;   // sound file
+    private AudioSource audioSource; // audio player
+
     void Awake()
     {
         shark = GetComponent<Rigidbody2D>();
@@ -47,6 +51,8 @@ public class SharkyController : MonoBehaviour
         // Get sprite for visual effects
         sharkSprite = GetComponent<SpriteRenderer>();
         originalColor = sharkSprite.color;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -103,6 +109,7 @@ public class SharkyController : MonoBehaviour
             collision.gameObject.SetActive(false);
             HasAloeVera = true;
             inventoryUI.SetAloe(true);
+            audioSource.PlayOneShot(ItemCollectSound);
         }
 
         // Pickup Shell
@@ -111,6 +118,7 @@ public class SharkyController : MonoBehaviour
             collision.gameObject.SetActive(false);
             HasShell = true;
             inventoryUI.SetShell(true);
+            audioSource.PlayOneShot(ItemCollectSound);
         }
 
 
@@ -119,6 +127,7 @@ public class SharkyController : MonoBehaviour
         {
             collision.gameObject.SetActive(false); // Hide item immediately
             StartCoroutine(MatchaBoost(collision.gameObject));
+            audioSource.PlayOneShot(MatchaPickupSound);
         }
     }
 
