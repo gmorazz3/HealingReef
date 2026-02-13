@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bluespeech_0: -2191041477603038363
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -24,9 +24,6 @@ public class PatientDialogue : MonoBehaviour
     public TextMeshProUGUI bubbleText;
     public float typingSpeed = 0.03f;
 
-    [Header("Bubble Animation")]
-    public float bubblePopDuration = 0.15f;
-
     [Header("Visuals")]
     public SpriteRenderer patientSprite;
 
@@ -48,7 +45,8 @@ public class PatientDialogue : MonoBehaviour
     private bool isHealed = false;
     private SharkyController playerController;
     private Coroutine typingCoroutine;
-    private Coroutine bubbleScaleCoroutine;
+
+    public bool IsHealed => isHealed;
 
     private void Start()
     {
@@ -59,8 +57,7 @@ public class PatientDialogue : MonoBehaviour
 
         if (dialogueBubble != null)
         {
-            dialogueBubble.SetActive(true);
-            dialogueBubble.transform.localScale = Vector3.zero;
+            dialogueBubble.SetActive(false); // start hidden
         }
 
         audioSource = GetComponent<AudioSource>();
@@ -177,11 +174,7 @@ public class PatientDialogue : MonoBehaviour
     {
         if (dialogueBubble == null || bubbleText == null) return;
 
-        if (bubbleScaleCoroutine != null)
-            StopCoroutine(bubbleScaleCoroutine);
-
-        dialogueBubble.SetActive(true);
-        bubbleScaleCoroutine = StartCoroutine(ScaleBubble(Vector3.one));
+        dialogueBubble.SetActive(true); // instantly visible
 
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
@@ -193,29 +186,7 @@ public class PatientDialogue : MonoBehaviour
     {
         if (dialogueBubble == null) return;
 
-        if (bubbleScaleCoroutine != null)
-            StopCoroutine(bubbleScaleCoroutine);
-
-        bubbleScaleCoroutine = StartCoroutine(ScaleBubble(Vector3.zero));
-    }
-
-    private IEnumerator ScaleBubble(Vector3 targetScale)
-    {
-        Vector3 startScale = dialogueBubble.transform.localScale;
-        float elapsed = 0f;
-
-        while (elapsed < bubblePopDuration)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / bubblePopDuration;
-            dialogueBubble.transform.localScale = Vector3.Lerp(startScale, targetScale, t);
-            yield return null;
-        }
-
-        dialogueBubble.transform.localScale = targetScale;
-
-        if (targetScale == Vector3.zero)
-            dialogueBubble.SetActive(false);
+        dialogueBubble.SetActive(false); // instantly hidden
     }
 
     private IEnumerator TypeText(string text)
