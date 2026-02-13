@@ -38,6 +38,10 @@ public class PatientDialogue : MonoBehaviour
     public Color sunburnColor = Color.red;
     private Color originalColor;
 
+    [Header("Sound")]
+    public AudioClip healedSound;
+    private AudioSource audioSource;
+
     [Header("Heal Effect")]
     public ParticleSystem healParticles;
 
@@ -58,6 +62,8 @@ public class PatientDialogue : MonoBehaviour
             dialogueBubble.SetActive(true);
             dialogueBubble.transform.localScale = Vector3.zero;
         }
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -111,6 +117,7 @@ public class PatientDialogue : MonoBehaviour
         ConsumeCure();
         PlayHealEffect();
         ShowCorrectDialogue();
+        audioSource.PlayOneShot(healedSound);
     }
 
     private void ConsumeCure()
