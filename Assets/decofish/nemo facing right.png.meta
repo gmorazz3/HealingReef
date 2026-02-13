@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      nemo facing right_0: 3985243124914484319
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
